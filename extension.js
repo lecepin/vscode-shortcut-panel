@@ -5,24 +5,27 @@ const child_process = require("child_process");
 const CustomCmdViewProvider = require("./provider/custom-cmd-view");
 const LocalStorage = require("./storage/localStorage");
 
-function activate(context) {
-  // 本地存储
-  const localStorage = new LocalStorage(context);
-  // localStorage.removeAll()
+function _refreshCustomView(vProvider, data) {
   vscode.commands.executeCommand(
     "setContext",
     "lp-shortcut-panel.showCustomWelcome",
-    localStorage.getAllValue().length ? false : true
+    data.length ? false : true
   );
+  vProvider.setData(data);
+  vProvider.refresh();
+}
+
+function activate(context) {
+  // 本地存储
+  const localStorage = new LocalStorage(context);
 
   // 面板：自定义命令
   const customCmdViewProvider = new CustomCmdViewProvider();
-
-  customCmdViewProvider.setData(localStorage.getAllValue());
   vscode.window.registerTreeDataProvider(
     "lp-shortcut-panel-custom-commands",
     customCmdViewProvider
   );
+  _refreshCustomView(customCmdViewProvider, localStorage.getAllValue());
 
   // 命令：exec
   context.subscriptions.push(
@@ -75,13 +78,7 @@ function activate(context) {
         command: "lp-shortcut-panel.exec-cmd",
         args: [{ cmd: cmdContent, title: cmdName }],
       });
-      vscode.commands.executeCommand(
-        "setContext",
-        "lp-shortcut-panel.showCustomWelcome",
-        localStorage.getAllValue().length ? false : true
-      );
-      customCmdViewProvider.setData(localStorage.getAllValue());
-      customCmdViewProvider.refresh();
+      _refreshCustomView(customCmdViewProvider, localStorage.getAllValue());
     })
   );
 
@@ -183,13 +180,7 @@ function activate(context) {
           command: "lp-shortcut-panel.exec-cmd",
           args: [{ cmd: cmdContent, title: cmdName }],
         });
-        vscode.commands.executeCommand(
-          "setContext",
-          "lp-shortcut-panel.showCustomWelcome",
-          localStorage.getAllValue().length ? false : true
-        );
-        customCmdViewProvider.setData(localStorage.getAllValue());
-        customCmdViewProvider.refresh();
+        _refreshCustomView(customCmdViewProvider, localStorage.getAllValue());
       }
     )
   );
@@ -205,13 +196,7 @@ function activate(context) {
 
         if (del == "删除") {
           await localStorage.remove(arg.label.label);
-          vscode.commands.executeCommand(
-            "setContext",
-            "lp-shortcut-panel.showCustomWelcome",
-            localStorage.getAllValue().length ? false : true
-          );
-          customCmdViewProvider.setData(localStorage.getAllValue());
-          customCmdViewProvider.refresh();
+          _refreshCustomView(customCmdViewProvider, localStorage.getAllValue());
         }
       }
     )
