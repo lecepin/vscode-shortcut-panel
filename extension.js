@@ -43,16 +43,6 @@ function activate(context) {
     )
   );
 
-  // 命令：hellow
-  context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "lp-shortcut-panel.helloWorld",
-      async (arg) => {
-        console.log("hellow ", arg);
-      }
-    )
-  );
-
   // 命令：add
   context.subscriptions.push(
     vscode.commands.registerCommand("lp-shortcut-panel.add-cmd", async () => {
