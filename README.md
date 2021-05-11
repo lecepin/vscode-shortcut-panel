@@ -2,6 +2,13 @@
 
 *SHORTCUT-PANEL* 为一个快捷面板扩展，内置了一些常用的命令，并提供了自定义的命令的能力，可以把你经常用到的命令添加到这里，使用时直接点击就可以了。
 
+## 安装
+
+安装地址：[点击安装](https://marketplace.visualstudio.com/items?itemName=lp-shortcut-panel.lp-shortcut-panel
+)
+
+<img src="https://img.alicdn.com/imgextra/i4/O1CN01r57JiG20uN67JCn8A_!!6000000006909-2-tps-1092-384.png" width="400">
+
 ## 特性
 
 安装完后的效果如下图所示：
