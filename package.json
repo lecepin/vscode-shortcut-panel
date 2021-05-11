@@ -1,0 +1,113 @@
+{
+  "name": "lp-shortcut-panel",
+  "displayName": "lp-shortcut-panel",
+  "description": "",
+  "version": "0.0.3",
+  "icon": "icon/icon.png",
+  "engines": {
+    "vscode": "^1.56.0"
+  },
+  "publisher": "lp-shortcut-panel",
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:lp-shortcut-panel-custom-commands"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "lp-shortcut-panel-common-commands",
+        "contents": "[启动项目](command:lp-shortcut-panel.npm-start)\n [删除 node_modules](command:lp-shortcut-panel.del-nodemodules)\n [发布 DEF](command:lp-shortcut-panel.pub-def)\n [Git Commit](command:workbench.scm.focus)"
+      },
+      {
+        "view": "lp-shortcut-panel-custom-commands",
+        "contents": "你还未添加自定义命令，可以点击按钮进行添加~\n [添加命令](command:lp-shortcut-panel.add-cmd)",
+        "when": "lp-shortcut-panel.showCustomWelcome"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lp-shortcut-panel",
+          "title": "快捷面板",
+          "icon": "icon/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "lp-shortcut-panel": [
+        {
+          "id": "lp-shortcut-panel-common-commands",
+          "name": "常用命令"
+        },
+        {
+          "id": "lp-shortcut-panel-custom-commands",
+          "name": "自定义命令"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "lp-shortcut-panel.add-cmd",
+        "title": "添加",
+        "icon": {
+          "light": "icon/add-l.svg",
+          "dark": "icon/add-d.svg"
+        }
+      },
+      {
+        "command": "lp-shortcut-panel.del-cmd",
+        "title": "删除",
+        "icon": {
+          "light": "icon/add-l.svg",
+          "dark": "icon/add-d.svg"
+        }
+      },
+      {
+        "command": "lp-shortcut-panel.modify-cmd",
+        "title": "修改",
+        "icon": {
+          "light": "icon/add-l.svg",
+          "dark": "icon/add-d.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "when": "view == lp-shortcut-panel-custom-commands",
+          "command": "lp-shortcut-panel.add-cmd",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "lp-shortcut-panel.del-cmd",
+          "group": "navigation"
+        },
+        {
+          "command": "lp-shortcut-panel.modify-cmd",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.56.0",
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "eslint": "^7.19.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.2.1",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0"
+  }
+}
