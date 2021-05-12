@@ -2,6 +2,7 @@ const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
 const child_process = require("child_process");
+const utils = require("./utils");
 const CustomCmdViewProvider = require("./provider/custom-cmd-view");
 const LocalStorage = require("./storage/localStorage");
 
@@ -32,9 +33,7 @@ function activate(context) {
     vscode.commands.registerCommand(
       "lp-shortcut-panel.exec-cmd",
       async (arg) => {
-        vscode.window.terminals.map(
-          (item) => item.name == arg.title && item.dispose()
-        );
+        utils.disposeTerminalByName(vscode.window.terminals, arg.title);
         const terminal = vscode.window.createTerminal(arg.title);
 
         terminal.show();
@@ -42,17 +41,6 @@ function activate(context) {
       }
     )
   );
-
-  // 命令：hellow
-  context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "lp-shortcut-panel.helloWorld",
-      async (arg) => {
-        console.log("hellow ", arg);
-      }
-    )
-  );
-
   // 命令：add
   context.subscriptions.push(
     vscode.commands.registerCommand("lp-shortcut-panel.add-cmd", async () => {
@@ -87,13 +75,15 @@ function activate(context) {
     vscode.commands.registerCommand(
       "lp-shortcut-panel.npm-start",
       async (arg) => {
-        vscode.window.terminals.map(
-          (item) => item.name == "启动项目" && item.dispose()
-        );
+        utils.disposeTerminalByName(vscode.window.terminals, "启动项目");
         const terminal = vscode.window.createTerminal("启动项目");
 
         terminal.show();
-        terminal.sendText(`tnpm i && npm start`);
+        !utils.validCmd("tnpm -v") &&
+          terminal.sendText(
+            "npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm"
+          );
+        terminal.sendText('tnpm i && npm start');
       }
     )
   );
@@ -132,18 +122,21 @@ function activate(context) {
     )
   );
 
-  // 命令：npm start
+  // 命令：def
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "lp-shortcut-panel.pub-def",
       async (arg) => {
-        vscode.window.terminals.map(
-          (item) => item.name == "发布 DEF" && item.dispose()
-        );
+        utils.disposeTerminalByName(vscode.window.terminals, "发布 DEF");
         const terminal = vscode.window.createTerminal("发布 DEF");
 
         terminal.show();
-        terminal.sendText(`def p`);
+        !utils.validCmd("tnpm -v") &&
+          terminal.sendText(
+            "npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm"
+          );
+        !utils.validCmd("def -v") && terminal.sendText("tnpm i -g @ali/def");
+        terminal.sendText("def p");
       }
     )
   );

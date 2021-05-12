@@ -2,7 +2,7 @@
   "name": "lp-shortcut-panel",
   "displayName": "lp-shortcut-panel",
   "description": "",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "icon": "icon/icon.png",
   "engines": {
     "vscode": "^1.52.0"
