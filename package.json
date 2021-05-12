@@ -8,6 +8,10 @@
     "vscode": "^1.52.0"
   },
   "publisher": "lp-shortcut-panel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lecepin/vscode-shortcut-panel"
+  },
   "categories": [
     "Other"
   ],
