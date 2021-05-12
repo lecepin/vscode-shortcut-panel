@@ -41,6 +41,7 @@ function activate(context) {
       }
     )
   );
+
   // 命令：add
   context.subscriptions.push(
     vscode.commands.registerCommand("lp-shortcut-panel.add-cmd", async () => {
@@ -83,7 +84,7 @@ function activate(context) {
           terminal.sendText(
             "npm install --registry=https://registry.npm.alibaba-inc.com -g tnpm"
           );
-        terminal.sendText('tnpm i && npm start');
+        terminal.sendText("tnpm i && npm start");
       }
     )
   );
